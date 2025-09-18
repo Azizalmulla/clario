@@ -114,6 +114,10 @@
     "rewrites": [
       { "source": "/image", "destination": "/image.html" },
       { "source": "/image/", "destination": "/image.html" },
+      { "source": "/image/**", "destination": "/image.html" },
+      { "source": "/video", "destination": "/video/index.html" },
+      { "source": "/video/", "destination": "/video/index.html" },
+      { "source": "/video/**", "destination": "/video/index.html" },
       { "source": "/success", "destination": "/success.html" },
       { "source": "/signin", "destination": "/signin.html" },
       { "source": "/api/**", "function": "api" }
