@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Clario — AI image & video creation</title>
+  <meta name="description" content="Clario is a creative AI suite for editing and generating images and creating cinematic videos with AI." />
+
+  <!-- Modern fonts: Plus Jakarta Sans (body) + Space Grotesk (headings) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="icon" type="image/png" href="./assets/ChatGPT Image Sep 1, 2025, 01_50_19 AM.png" />
+</head>
+<body id="home">
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="#home" class="logo" aria-label="Clario home">CLARIO</a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#home">Home</a>
+        <a href="#image">Image</a>
+        <a href="#video">Video</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#learn">Learn</a>
+      </nav>
+
+      <div id="user-nav" class="user-nav" style="display: none;">
+        <img id="user-avatar" class="user-avatar" src="" alt="" />
+        <span id="user-name" class="user-name"></span>
+        <button id="sign-out" class="btn btn-light">Sign out</button>
+      </div>
+      <div id="guest-nav" class="guest-nav">
+        <a class="btn btn-light" href="/signin.html">Sign in</a>
+        <a class="btn btn-dark cta" href="#pricing">Try Clario</a>
+      </div>
+      <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <h1>AI image & video creation that’s simple, powerful, and elegant.</h1>
+        <p class="sub">Generate, edit, and transform visuals in seconds using the latest AI models.</p>
+
+        <div class="cta-cards">
+          <article class="card">
+            <small class="eyebrow">CLARIO.IMAGE</small>
+            <h3>Meet Clario Image</h3>
+            <p>Upload, edit, and generate stunning visuals.</p>
+            <a class="btn btn-dark" href="image/index.html">Start Editing</a>
+          </article>
+          <article class="card">
+            <small class="eyebrow">CLARIO.VIDEO</small>
+            <h3>Meet Clario Video</h3>
+            <p>Turn prompts and photos into cinematic clips.</p>
+            <a class="btn btn-light" href="video/index.html">Generate Video</a>
+          </article>
+        </div>
+      </div>
+
+      <div class="hero-art">
+        <img src="./assets/ChatGPT Image Sep 1, 2025, 01_50_19 AM.png" alt="Clario logo" loading="eager" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Section (Learn) -->
+  <section id="learn" class="why">
+    <div class="container">
+      <div class="section-header">
+        <h2>Why Clario</h2>
+        
+      </div>
+      <div class="why-cards-grid">
+        <div class="why-card">
+          <div class="card-content">
+            <div class="card-top">
+              <div class="card-title">Intelligent</div>
+              <p>01</p>
+            </div>
+            <div class="card-bottom">
+              <p>AI that instantly translates your ideas into clear, polished results.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="why-card">
+          <div class="card-content">
+            <div class="card-top">
+              <div class="card-title">Creative Freedom</div>
+              <p>02</p>
+            </div>
+            <div class="card-bottom">
+              <p>From image to video to edits—Clario adapts to any creative flow.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="why-card">
+          <div class="card-content">
+            <div class="card-top">
+              <div class="card-title">Expressive</div>
+              <p>03</p>
+            </div>
+            <div class="card-bottom">
+              <p>Bring unique styles, moods, and motion to life with ease.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Image Feature Anchor -->
+  <section id="image" class="feature">
+    <div class="container feature-inner">
+      <div class="feature-copy">
+        <h2>Edit and generate images effortlessly</h2>
+        <p>Brushes, masks, and prompt guidance let you refine details while keeping the big picture.</p>
+        <div class="chip-row">
+          <span class="chip">Inpaint</span>
+          <span class="chip">Outpaint</span>
+          <span class="chip">Style</span>
+          <span class="chip">Upscale</span>
+        </div>
+      </div>
+      <div class="ba-card">
+        <div class="ba-stage">
+          <img class="before" src="./assets/hamadold.jpg" alt="Before edit" />
+          <img class="after" src="./assets/hamad.jpeg" alt="After edit" />
+        </div>
+        <input class="slider" type="range" min="0" max="100" value="50" aria-label="Before after slider" />
+        <div class="ba-labels"><span>Before</span><span>After</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Feature Anchor -->
+  <section id="video" class="feature alt">
+    <div class="container feature-inner">
+      <div class="feature-copy">
+        <h2>Create cinematic video from prompts</h2>
+        <p>Describe a scene and let Clario compose motion, lighting, and pacing automatically.</p>
+        <div class="chip-row">
+          <span class="chip">Text → Video</span>
+          <span class="chip">Photo → Video</span>
+          <span class="chip">Scene Stitch</span>
+        </div>
+      </div>
+      <div class="video-card">
+        <video class="preview" src="./assets/MtL7cIeMlDsIsS1R.mp4" playsinline muted loop autoplay controls poster="https://images.unsplash.com/photo-1499084732479-de2c02d45fc4?q=80&w=1600&auto=format&fit=crop"></video>
+        <div class="video-overlay">
+          <span class="dot"></span>
+          <span>Preview</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote Section -->
+  <section class="quote-section">
+    <div class="container">
+      <blockquote class="big-quote">
+        <h2>Make visuals at the speed of thought</h2>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing" class="pricing">
+    <div class="container">
+      <div class="section-header">
+        <h2>Pricing</h2>
+        <p>Start free. Upgrade when you need more power.</p>
+      </div>
+      <div class="pricing-grid">
+        <article class="price-card">
+          <h3>Clario Starter</h3>
+          <p class="price">KWD 29.99</p>
+          <ul>
+            <li>300 credits</li>
+            <li>300 AI generations (image + video)</li>
+            <li>Perfect for casual creators</li>
+            <li>Credits expire monthly</li>
+          </ul>
+          <button class="btn btn-light full" type="button" data-plan="starter">Buy Starter</button>
+        </article>
+        <article class="price-card highlight">
+          <h3>Clario Pro</h3>
+          <p class="price">KWD 59.99</p>
+          <ul>
+            <li>1,000 credits</li>
+            <li>1,000 AI generations (image + video)</li>
+            <li>Best for regular content creators</li>
+            <li>Priority processing</li>
+          </ul>
+          <button class="btn btn-dark full" type="button" data-plan="pro">Upgrade to Pro</button>
+        </article>
+        <article class="price-card">
+          <h3>Clario Enterprise</h3>
+          <p class="price">KWD 149.99</p>
+          <ul>
+            <li>3,000 credits</li>
+            <li>3,000 AI generations (image + video)</li>
+            <li>Designed for agencies & power users</li>
+            <li>Dedicated support</li>
+          </ul>
+          <button class="btn btn-light full" type="button" data-plan="enterprise">Buy Enterprise</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span class="logo small">CLARIO</span>
+      <nav class="foot-links" aria-label="Secondary">
+        <a href="#learn">About</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy</a>
+      </nav>
+      <span class="muted">© <span id="year"></span> Clario</span>
+    </div>
+  </footer>
+
+  <script src="./script.js" defer></script>
+  <script type="module" src="./pay.js" defer></script>
+  <script type="module" src="./header-auth.js" defer></script>
+</body>
+</html>

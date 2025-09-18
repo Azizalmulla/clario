@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Test Credits - Clario</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container" style="max-width: 600px; margin: 50px auto; padding: 20px;">
+        <h1>Add Test Credits</h1>
+        <p>Use this page to add credits for testing the video editor.</p>
+        
+        <div class="card" style="margin: 20px 0;">
+            <h3>Current Credits</h3>
+            <div id="current-credits">Loading...</div>
+        </div>
+        
+        <div class="card" style="margin: 20px 0;">
+            <h3>Add Credits</h3>
+            <div style="margin: 10px 0;">
+                <label>General Credits: <input type="number" id="credits" value="100" min="0"></label>
+            </div>
+            <div style="margin: 10px 0;">
+                <label>Preview Credits: <input type="number" id="previewCredits" value="50" min="0"></label>
+            </div>
+            <div style="margin: 10px 0;">
+                <label>HD Credits: <input type="number" id="hdCredits" value="10" min="0"></label>
+            </div>
+            <button id="add-credits-btn" class="btn" style="margin-top: 15px;">Add Credits</button>
+        </div>
+        
+        <div id="message" style="margin: 20px 0; padding: 10px; border-radius: 8px; display: none;"></div>
+        
+        <div style="margin-top: 30px;">
+            <a href="/video" class="btn btn-light">Go to Video Editor</a>
+            <a href="/" class="btn btn-light" style="margin-left: 10px;">Back to Home</a>
+        </div>
+    </div>
+
+    <script type="module">
+        import { auth, onReady, getIdToken } from '/auth.js';
+
+        let user = null;
+
+        async function showMessage(text, isError = false) {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.style.display = 'block';
+            msg.style.backgroundColor = isError ? '#fee' : '#efe';
+            msg.style.color = isError ? '#c33' : '#363';
+            msg.style.border = `1px solid ${isError ? '#fcc' : '#cfc'}`;
+        }
+
+        async function loadCurrentCredits() {
+            try {
+                if (!user) return;
+                
+                const token = await getIdToken();
+                const response = await fetch('/api/user/credits', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('current-credits').innerHTML = `
+                        <div>General Credits: ${data.credits || 0}</div>
+                        <div>Preview Credits: ${data.previewCredits || 0}</div>
+                        <div>HD Credits: ${data.hdCredits || 0}</div>
+                    `;
+                } else {
+                    document.getElementById('current-credits').textContent = 'Error loading credits';
+                }
+            } catch (error) {
+                console.error('Error loading credits:', error);
+                document.getElementById('current-credits').textContent = 'Error loading credits';
+            }
+        }
+
+        async function addCredits() {
+            try {
+                if (!user) {
+                    showMessage('Please sign in first', true);
+                    return;
+                }
+
+                const credits = parseInt(document.getElementById('credits').value) || 0;
+                const previewCredits = parseInt(document.getElementById('previewCredits').value) || 0;
+                const hdCredits = parseInt(document.getElementById('hdCredits').value) || 0;
+
+                const token = await getIdToken();
+                const response = await fetch('/api/test/addCredits', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ credits, previewCredits, hdCredits })
+                });
+
+                const data = await response.json();
+                
+                if (data.ok) {
+                    showMessage(data.message);
+                    loadCurrentCredits(); // Refresh current credits
+                } else {
+                    showMessage(data.error || 'Failed to add credits', true);
+                }
+            } catch (error) {
+                console.error('Error adding credits:', error);
+                showMessage('Error adding credits', true);
+            }
+        }
+
+        // Initialize
+        onReady(async (currentUser) => {
+            user = currentUser;
+            if (user) {
+                loadCurrentCredits();
+            } else {
+                document.getElementById('current-credits').innerHTML = 
+                    '<div style="color: #c33;">Please <a href="/signin">sign in</a> to view credits</div>';
+            }
+        });
+
+        document.getElementById('add-credits-btn').addEventListener('click', addCredits);
+    </script>
+</body>
+</html>

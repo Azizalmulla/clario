@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Payment Success — Clario</title>
+  <meta name="description" content="Your Clario payment status and credits." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="icon" type="image/png" href="./assets/ChatGPT Image Sep 1, 2025, 01_50_19 AM.png" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="/" class="logo" aria-label="Clario home">CLARIO</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="/">Home</a>
+        <a href="/image/index.html">Image</a>
+        <a href="/video/index.html">Video</a>
+        <a href="/#pricing">Pricing</a>
+      </nav>
+      <a class="btn btn-light" href="/signin">Sign in</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top: 72px; padding-bottom: 72px;">
+    <section class="card" style="max-width:720px; margin:0 auto; text-align:center;">
+      <h1>Thank you!</h1>
+      <p id="status">We’re confirming your payment — this should only take a moment.</p>
+      <div id="spinner" class="spinner" aria-hidden="false" style="margin: 24px auto;"></div>
+
+      <div id="signed-out" style="display:none; margin-top: 24px;">
+        <p>Please sign in to view your credits.</p>
+        <a class="btn btn-dark" href="/signin">Sign in</a>
+      </div>
+
+      <div id="signed-in" style="display:none; margin-top:24px;">
+        <p><strong>Account:</strong> <span id="user-email"></span></p>
+        <p><strong>Credits:</strong> <span id="credits">—</span></p>
+        <a class="btn btn-dark" href="/image/index.html" style="margin-top:16px;">Start Creating</a>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="/success.js"></script>
+</body>
+</html>

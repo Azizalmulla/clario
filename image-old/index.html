@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Clario Image Editor</title>
+  <meta name="description" content="Canvas-first image editor powered by Gemini." />
+
+  <!-- Fonts to match landing -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="icon" type="image/png" href="../assets/ChatGPT Image Sep 1, 2025, 01_50_19 AM.png" />
+</head>
+<body>
+  <!-- Navbar (reuse style) -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="/" class="logo" aria-label="Clario home">CLARIO</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="/">Home</a>
+        <a href="/image/" aria-current="page">Image</a>
+        <a href="/video/">Video</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/#learn">Learn</a>
+      </nav>
+      <div id="user-nav" class="user-nav" style="display: none;">
+        <img id="user-avatar" class="user-avatar" src="" alt="" />
+        <span id="user-name" class="user-name"></span>
+        <button id="sign-out" class="btn btn-light">Sign out</button>
+      </div>
+      <div id="guest-nav" class="guest-nav">
+        <a class="btn btn-light" href="/signin.html">Sign in</a>
+        <a class="btn btn-dark cta" href="/#pricing">Try Clario</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Editor Shell -->
+  <main class="editor-shell">
+    <div class="container">
+      <!-- Top bar -->
+      <div class="editor-topbar">
+        <div class="left">
+          <label class="btn btn-light" for="file-input">Upload</label>
+          <input id="file-input" type="file" accept="image/*" hidden />
+          <button id="undo-btn" class="btn btn-light" disabled>Undo</button>
+          <button id="redo-btn" class="btn btn-light" disabled>Redo</button>
+        </div>
+        <div class="center">
+          <h1 class="editor-title">Clario Image</h1>
+        </div>
+        <div class="right">
+          <button id="export-btn" class="btn btn-dark" disabled>Export</button>
+        </div>
+      </div>
+
+      <!-- Editor Main -->
+      <div class="editor-main">
+        <div class="canvas-wrap">
+          <!-- Base image canvas -->
+          <canvas id="base-canvas" aria-label="Image canvas"></canvas>
+          <!-- Mask overlay canvas (for drawing selection) -->
+          <canvas id="mask-canvas" aria-label="Mask canvas"></canvas>
+        </div>
+
+        <!-- Right panel -->
+        <aside class="editor-panel">
+          <h2>Prompt</h2>
+          <textarea id="prompt" placeholder="Describe the edit you want (e.g., 'remove background', 'replace sky with sunset', 'fix blemishes')."></textarea>
+          <button id="apply-btn" class="btn btn-dark" disabled>Apply</button>
+          <div class="panel-note">
+            If an area is painted on the canvas, only that region will be edited.
+          </div>
+          <div class="panel-help">
+            Tip: Drag to paint selection. Hold Shift for straight strokes. Use Undo/Redo to refine your mask.
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { guardPage, auth, db } from '/auth.js';
+    import { doc, getDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js';
+    guardPage();
+    // Expose an ID token getter for non-module scripts
+    window.clarioGetIdToken = async () => {
+      const u = auth.currentUser;
+      if(!u) return null;
+      return await u.getIdToken();
+    };
+    // Expose Firestore helpers for image.js polling
+    window.clarioDb = db;
+    window.clarioDoc = doc;
+    window.clarioGetDoc = getDoc;
+    window.clarioOnSnapshot = onSnapshot;
+  </script>
+  <script src="../image.js" defer></script>
+  <script type="module" src="/header-auth.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users can only read/write their own user document
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Video jobs: allow users to read only their own job documents. Writes are server-side only.
+    match /videoJobs/{jobId} {
+      allow get: if request.auth != null && resource.data.uid == request.auth.uid;
+      allow list: if false; // prevent listing all jobs
+      allow create, update, delete: if false; // server-only via Cloud Functions
+    }
+
+    // Image jobs: allow users to read only their own job documents. Writes are server-side only.
+    match /imageJobs/{jobId} {
+      allow get: if request.auth != null && resource.data.uid == request.auth.uid;
+      allow list: if false;
+      allow create, update, delete: if false;
+    }
+
+    // Creations collection
+    match /creations/{docId} {
+      // Read existing docs where the stored uid matches the caller
+      allow get, list: if request.auth != null && resource.data.uid == request.auth.uid;
+
+      // Create only if the incoming uid matches the caller
+      allow create: if request.auth != null && request.resource.data.uid == request.auth.uid;
+
+      // Update/Delete only on documents owned by the caller
+      allow update, delete: if request.auth != null && resource.data.uid == request.auth.uid;
+    }
+  }
+}
